@@ -14,7 +14,7 @@ jobs:
           # 要喚醒的網址清單
           urls=(
             "https://little-chapter-backend.onrender.com/"
-            "https://your-second-service.onrender.com/"   # ← 改成你的第二支服務
+            "https://projectfrontend-serverside.onrender.com/"   # ← 改成你的第二支服務
           )
 
           for url in "${urls[@]}"; do
