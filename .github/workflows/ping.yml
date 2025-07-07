@@ -1,24 +1,24 @@
+# 檔案：.github/workflows/keep-render-awake.yml
 name: Keep Render Apps Awake
 
 on:
-  workflow_dispatch:        # 👉 可手動執行一次驗證
+  workflow_dispatch:
   schedule:
-    - cron: '*/10 * * * *'  # 每 10 分鐘執行一次（24 hr）
+    - cron: '0,10,20,30,40,50 * * * *'  # UTC 每小時 的 00/10/20/30/40/50 分
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Call Render backends and show HTTP status
+      - name: Ping Render services
         run: |
-          # 要喚醒的網址清單
           urls=(
             "https://little-chapter-backend.onrender.com/"
-            "https://projectfrontend-serverside.onrender.com/index"   # ← 改成你的第二支服務
+            "https://projectfrontend-serverside.onrender.com/index"
           )
 
           for url in "${urls[@]}"; do
-            echo "Calling $url at $(date -u)"
+            echo "Calling $url at $(date -u +"%Y-%m-%d %H:%M:%S") UTC"
             status=$(curl -s -o /dev/null -w "%{http_code}" "$url")
-            echo "HTTP Status for $url: $status"
+            echo "→ HTTP Status for $url: $status"
           done
